@@ -13,4 +13,4 @@ ts-node index.ts ./api.json
 3. 会有一些重名方法，需要手动更改。
 
 ## 预览
-[截图](/img/深度截图_code_20180717194308.png)
+[截图](https://git.dankal.cn/Yjhenan/json2api/raw/master/img/深度截图_code_20180717194308.png)
