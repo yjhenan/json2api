@@ -20,13 +20,14 @@ if (!dir) {
 }
 let rootDir = pathLib.dirname(dir) + '/dist';
 
+
 function ProjectInfo(params: IProject) {
     return `
 # ${params.name}\n
 ## ${params.details}`
 }
 
-function json2api(params: IChild) {
+function obj2api(params: IChild) {
     let header = ''; // 前缀
     let type = 'data';
     let url = params.url.replace(/\$/g, '/');
@@ -42,7 +43,7 @@ function json2api(params: IChild) {
     }
     // 去除 Uuid
     if (methodName.search('{') != -1) {
-        methodName = methodName.replace(/\{[\s\S]{0,}\}/g, '')
+        methodName = methodName.replace(/\{[\s\S]{0,}\}/g, '') + 'Item';
         // console.log(methodName, 33333333);
     }
 
@@ -70,11 +71,9 @@ function json2api(params: IChild) {
             break;
     }
 
-    // console.log(methodName, 11111111);
-
     return `
 // ${params.name}
-const ${header}${methodName} = data => {
+export const ${header}${methodName} = data => {
   return HttpRequest({
     url: \`${url}\`,
     method: "${params.requestMethod}",
@@ -109,9 +108,9 @@ const ${header}${methodName} = data => {
             // 创建文件
             for (const folders of item.folders) {
                 let folderPath = pathLib.join(modulesPath, folders.name + '.js');
-                await pFs.writeFile(folderPath, `//${folders.name}\nimport HttpRequest from "../jslib/dk-axios";\n`)
+                await pFs.writeFile(folderPath, `// ${folders.name}\n// ${folders.createTime}\n\nimport HttpRequest from "../jslib/dk-axios";\n`)
                 for (const itemMethod of folders.children) {
-                    await pFs.appendFile(folderPath, json2api(itemMethod));
+                    await pFs.appendFile(folderPath, obj2api(itemMethod));
                 }
             }
         }
