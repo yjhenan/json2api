@@ -30,7 +30,8 @@ function ProjectInfo(params: IProject) {
 function obj2api(params: IChild) {
     let header = ''; // 前缀
     let type = 'data';
-    let url = params.url.replace(/\$/g, '/');
+    let url = params.url.replace(/\$\//g, '/'); // 待优化，此处将 $/ 一起替换为 / ，防止出现 // 的情况
+    url = url.replace(/\$/g, '/');
     // 使用 URL 去掉开头
     let methodName = url.split('/').splice(2).map(item => {
         // 首字母大写
