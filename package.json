@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "ccc": "rm -rf dist && rm api.json && curl http://example.com/api/project/10WmPEx2rm.json?token=0865b9c55d654e90a2cd9abf65c43fb5 -o api.json && ts-node index.ts ./api.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
